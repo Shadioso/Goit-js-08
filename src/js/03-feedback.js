@@ -4,7 +4,7 @@ const formTextArea = document.querySelector(`.feedback-form textarea`);
 const form = document.querySelector(`form`);
 const emailLabel = document.querySelector(`.feedback-form input`);
 const STORAGE_KEY = `feedback-form-state`;
-const formData = {};
+let formData = {};
 
 const saveData = evt => {
   const value = evt.target.value;
@@ -17,13 +17,14 @@ const submitForm = evt => {
   evt.preventDefault();
   const {
     elements: { email, message },
-  } = evt.target;
-  if (email.value === '' && message.value === '') {
+  } = evt.currentTarget;
+  if (email.value === '' || message.value === '') {
     return alert(`Please fill all fields`);
   }
   console.log(JSON.parse(localStorage.getItem(STORAGE_KEY)));
   evt.target.reset();
   localStorage.removeItem(STORAGE_KEY);
+  formData = {};
 };
 //
 const populateTextArea = evt => {
